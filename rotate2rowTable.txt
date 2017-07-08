@@ -1,0 +1,26 @@
+
+
+mysql> create table years_stat ( year int not null, frequency int not null);
+mysql> insert into years_stat(year, frequency) values(1997, 400);
+mysql> insert into years_stat(year, frequency) values(1999, 700);
+mysql> select * from years_stat;
++------+-----------+
+| year | frequency |
++------+-----------+
+| 1997 |       400 |
+| 1999 |       700 |
++------+-----------+
+2 rows in set (0.00 sec)
+
+# derived tables below flattens the table (rotates it 90 degree.)
+
+
+mysql> select t_1997.frequency '1997', t_1999.frequency '1999', round(100 *(t_1999.frequency - t_1997.frequency)/t_1999.frequency, 2) 'percent'  from  (select frequency from years_stat where year =1997) as t_1997, (select frequency from years_stat where year =1999) as t_1999;
+
++------+------+---------+
+| 1997 | 1999 | percent |
++------+------+---------+
+|  400 |  700 |   42.86 |
++------+------+---------+
+1 row in set (0.00 sec)
+ 
