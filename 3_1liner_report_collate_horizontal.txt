@@ -1,0 +1,41 @@
+
+which database?
+mysql> select database();
++------------+
+| database() |
++------------+
+| hibnatedb  |
++------------+
+
+mysql> create table ayear (stat_this int not null, stat_last int not null);
+mysql> create table amonth (stat_this int not null, stat_last int not null);
+mysql> create table aweek (stat_this int not null, stat_last int not null);
+
+mysql> select "y->", y1.*,  m1.*, w1.* from (select * from ayear) as y1, (select
+ * from amonth) as m1, (select * from aweek) as w1;
++-----+-----------+-----------+-----------+-----------+-----------+-----------+
+| y-> | stat_this | stat_last | stat_this | stat_last | stat_this | stat_last |
++-----+-----------+-----------+-----------+-----------+-----------+-----------+
+| y-> |       200 |       600 |        20 |        15 |         7 |         3 |
++-----+-----------+-----------+-----------+-----------+-----------+-----------+
+
+mysql> show columns from ayear;
++-----------+---------+------+-----+---------+-------+
+| Field     | Type    | Null | Key | Default | Extra |
++-----------+---------+------+-----+---------+-------+
+| stat_this | int(11) | NO   |     | NULL    |       |
+| stat_last | int(11) | NO   |     | NULL    |       |
++-----------+---------+------+-----+---------+-------+
+
+mysql> insert into ayear(stat_this, stat_last) values(200, 600);
+mysql> insert into amonth(stat_this, stat_last) values(20, 15);
+mysql> insert into aweek(stat_this, stat_last) values(7, 3);
+
+mysql> select y1.*, m1.*, w1.* from (select * from ayear) as y1, (select * from amonth) as m1, (select * from aweek) as w1;
++-----------+-----------+-----------+-----------+-----------+-----------+
+| stat_this | stat_last | stat_this | stat_last | stat_this | stat_last |
++-----------+-----------+-----------+-----------+-----------+-----------+
+|       200 |       600 |        20 |        15 |         7 |         3 |
++-----------+-----------+-----------+-----------+-----------+-----------+
+
+note: It seems dynamically year name "stat_this", "stat_last" cannot be changed based on date.
