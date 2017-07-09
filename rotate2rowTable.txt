@@ -1,4 +1,11 @@
 
+which database? [at home]
+mysql> select database();
++------------+
+| database() |
++------------+
+| hibnatedb  |
++------------+
 
 mysql> create table years_stat ( year int not null, frequency int not null);
 mysql> insert into years_stat(year, frequency) values(1997, 400);
